@@ -4,11 +4,7 @@ export const getFileTree = async (filepath = "./share") => {
 };
 
 export const downloadFile = async (filepath, filename) => {
-	const req = JSON.stringify({ filepath });
-	const res = await fetch("http://localhost/files/get", {
-		method: "POST",
-		body: req,
-	});
+	const res = await fetch("http://localhost/files/get" + filepath);
 
 	const blob = await res.blob();
 
