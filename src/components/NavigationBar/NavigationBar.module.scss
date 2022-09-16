@@ -1,0 +1,172 @@
+@use "/styles/partials/palette";
+@use "/styles/partials/typography";
+@use "/styles/partials/devices";
+
+@use "/styles/modules/defaults.scss";
+
+.NavigationBar {
+	position: sticky;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+
+	width: 100%;
+	min-height: 70px;
+
+	padding: 0px;
+	/* margin-bottom: 70px; */
+
+	display: flex;
+	justify-content: end;
+	align-items: center;
+	list-style: none;
+
+	box-shadow: 0px 6px 4px palette.$shadow;
+
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 24px;
+
+	color: palette.$font-light;
+	background-color: palette.$light;
+
+	z-index: 1;
+
+	&__Icon {
+		position: absolute;
+		left: 0;
+		margin: 20px;
+	}
+
+	&__Toggle {
+		position: fixed;
+		top: 0px;
+		right: 0px;
+
+		opacity: 0%;
+
+		height: 70px;
+		width: 70px;
+
+		align-self: start;
+		order: 1;
+		z-index: 10;
+
+		cursor: pointer;
+
+		&Label {
+			position: fixed;
+			top: 0px;
+			right: 0px;
+			margin: 0px 10px;
+
+			@include defaults.flex-center;
+
+			font-size: 50px;
+		}
+
+		@include devices.phone {
+			display: block;
+
+			&Label {
+				display: flex;
+			}
+		}
+
+		@include devices.tablet {
+			display: block;
+
+			&Label {
+				display: flex;
+			}
+		}
+
+		@include devices.desktop {
+			display: none;
+
+			&Label {
+				display: none;
+			}
+		}
+
+		&Label::after {
+			content: "☰";
+		}
+
+		&:checked {
+			height: 70px;
+			width: 70px;
+
+			& ~ .NavigationBar__Icon {
+				display: none;
+			}
+
+			& ~ .NavigationBar__Buttons {
+				display: flex;
+			}
+
+			& + .NavigationBar__ToggleLabel::after {
+				color: white;
+				content: "\002716";
+			}
+		}
+	}
+
+	&__Buttons {
+		display: flex;
+		justify-content: end;
+
+		@include devices.phone {
+			display: none;
+			flex-direction: column;
+			justify-content: flex-start;
+			width: 100vw;
+		}
+
+		@include devices.tablet {
+			display: none;
+			flex-direction: column;
+			justify-content: flex-start;
+			width: 100vw;
+		}
+
+		@include devices.desktop {
+			@include defaults.flex-center;
+			flex-direction: row;
+		}
+
+		& > a {
+			@include defaults.flex-center;
+
+			@include devices.phone {
+				width: 100vw;
+			}
+
+			@include devices.tablet {
+				width: 100vw;
+			}
+
+			@include devices.desktop {
+				width: 200px;
+			}
+			height: 70px;
+
+			/* padding: 20px; */
+
+			text-decoration: none;
+			color: palette.$dark;
+
+			&:hover {
+				background-color: palette.$highlight;
+				box-shadow: 0px 6px 4px palette.$shadow;
+			}
+
+			&:active {
+				background-color: palette.$neutral;
+			}
+
+			&:visited {
+				background-color: palette.$highlight;
+			}
+		}
+	}
+}
