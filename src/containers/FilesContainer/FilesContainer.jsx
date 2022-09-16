@@ -20,7 +20,7 @@ function FilesContainer(props) {
 	}, []);
 
 	useEffect(() => {
-		console.log("update", dir.toString());
+		/* console.log("update", dir.toString()); */
 		setFolder(
 			dir.length == 0
 				? elements
@@ -30,7 +30,6 @@ function FilesContainer(props) {
 						elements
 				  )
 		);
-		console.log(folder);
 	}, [elements, dir]);
 
 	const goto = (path) => {
@@ -63,6 +62,7 @@ function FilesContainer(props) {
 			<FileComponent
 				key={index}
 				name={e}
+				path={folder[".."] + "/" + e}
 				onClick={() => download(folder[".."] + "/" + e, e)}
 			/>
 		);

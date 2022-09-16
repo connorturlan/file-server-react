@@ -1,8 +1,18 @@
-.FileComponent {
-	width: 100px;
-	height: 100px;
+.file {
+	width: 100%;
+	height: 100%;
+
+	padding: 5px;
 
 	border-radius: 20px;
 
+	color: #222;
 	background-color: paleturquoise;
+
+	&__image {
+		width: 90%;
+		height: 90%;
+
+		object-fit: contain;
+	}
 }
