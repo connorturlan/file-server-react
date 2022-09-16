@@ -57,16 +57,18 @@ function FilesContainer(props) {
 	});
 
 	// generate file icons.
-	const files = folder["."].map((e, index) => {
-		return (
-			<FileComponent
-				key={index}
-				name={e}
-				path={folder[".."] + "/" + e}
-				onClick={() => download(folder[".."] + "/" + e, e)}
-			/>
-		);
-	});
+	const files = folder["."]
+		.sort((a, b) => a.split(".").at(-1).localeCompare(b.split(".").at(-1)))
+		.map((e, index) => {
+			return (
+				<FileComponent
+					key={index}
+					name={e}
+					path={folder[".."] + "/" + e}
+					onClick={() => download(folder[".."] + "/" + e, e)}
+				/>
+			);
+		});
 
 	return (
 		<div className={styles.FilesContainer}>

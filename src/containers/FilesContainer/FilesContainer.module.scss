@@ -1,6 +1,11 @@
+$cols: 10;
+$icon-size: calc((100vw - (20px * ($cols + 1))) / $cols);
+
 .FilesContainer {
 	display: grid;
-	grid-template-columns: repeat(6, 200px);
-	grid-template-rows: repeat(100, 200px);
+
+	grid-template-columns: repeat($cols, $icon-size);
+	grid-template-rows: repeat(100, $icon-size);
+
 	gap: 20px;
 }

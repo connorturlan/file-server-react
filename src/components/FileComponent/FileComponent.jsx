@@ -4,7 +4,7 @@ import styles from "./FileComponent.module.scss";
 function FileComponent({ name, path, onClick }) {
 	console.log(path);
 
-	const imagePreview = name.toLowerCase().match(/.[jpg|gif|png]$/i) ? (
+	const imagePreview = name.toLowerCase().match(/.(jpe?g|gif|png|webm)$/i) ? (
 		<img
 			className={styles.file__image}
 			src={getFilePath(path)}
