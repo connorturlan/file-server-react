@@ -2,9 +2,9 @@ import { getFilePath } from "../../utils";
 import styles from "./FileComponent.module.scss";
 
 function FileComponent({ name, path, onClick }) {
-	console.log(path);
-
-	const imagePreview = name.toLowerCase().match(/.(jpe?g|gif|png|webm)$/i) ? (
+	const imagePreview = /.(jpe?g|gif|png|webp|webm)$/i.test(
+		name.toLowerCase()
+	) ? (
 		<img
 			className={styles.file__image}
 			src={getFilePath(path)}

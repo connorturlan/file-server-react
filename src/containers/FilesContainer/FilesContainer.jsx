@@ -46,6 +46,8 @@ function FilesContainer(props) {
 		downloadFile(filepath, filename);
 	};
 
+	const upload = () => {};
+
 	// generate folder icons, remove the `.` and `..`.
 	const array_folders = Object.keys(folder);
 	let root_index = array_folders.indexOf(".");
@@ -73,6 +75,7 @@ function FilesContainer(props) {
 	return (
 		<div className={styles.FilesContainer}>
 			{/* go back one folder */}
+			<input type="file" />
 			<FolderComponent name={"←"} onClick={() => goBack()} />
 			{folders}
 			{files}
