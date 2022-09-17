@@ -6,7 +6,8 @@ export const getFileTree = async (filepath = "./share") => {
 export const getFilePath = (root, filename) => root + "/" + filename;
 
 export const getFileURL = (filepath) => "http://localhost/files/get" + filepath;
-export const postFileURL = (filepath) => "http://localhost/files" + filepath;
+export const postFileURL = (filepath) =>
+	"http://localhost/files/upload" + filepath;
 
 export const downloadFile = async (filepath, filename) => {
 	const res = await fetch(getFileURL(filepath));
@@ -27,15 +28,16 @@ export const sendFile = async (root, { name, type }, data) => {
 	// format the filepath.
 	const file_path = getFilePath(root, name);
 	const file_url = postFileURL(file_path);
-	console.log(root, name, file_path, file_url, type, data);
 
 	// post the data.
 	const res = await fetch(file_url, {
 		method: "POST",
-		mode: "no-cors",
-		headers: { "Content-Type": type },
+		/* mode: "no-cors", */
+		headers: { "Content-Type": type, Accept: "text/html" },
 		body: data,
 	});
+
+	console.log("status:", res.status);
 
 	// check the status of the request.
 	if (res.status != 202) {
