@@ -1,4 +1,4 @@
-import { getFilePath } from "../../utils";
+import { getFileURL } from "../../utils";
 import styles from "./FileComponent.module.scss";
 
 function FileComponent({ name, path, onClick }) {
@@ -7,7 +7,7 @@ function FileComponent({ name, path, onClick }) {
 	) ? (
 		<img
 			className={styles.file__image}
-			src={getFilePath(path)}
+			src={getFileURL(path)}
 			title={name}
 		></img>
 	) : (

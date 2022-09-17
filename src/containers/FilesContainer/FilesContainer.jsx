@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import FileComponent from "../../components/FileComponent/FileComponent";
 import FolderComponent from "../../components/FolderComponent/FolderComponent";
-import { downloadFile, getFileTree } from "../../utils";
+import {
+	downloadFile,
+	getFilePath,
+	getFileTree,
+	uploadFile,
+} from "../../utils";
 import styles from "./FilesContainer.module.scss";
 
 function FilesContainer(props) {
@@ -46,28 +51,33 @@ function FilesContainer(props) {
 		downloadFile(filepath, filename);
 	};
 
-	const upload = () => {};
+	const upload = (event) => {
+		event.preventDefault();
+		Array.from(event.target.files).forEach((file) =>
+			uploadFile(folder[".."], file)
+		);
+	};
 
-	// generate folder icons, remove the `.` and `..`.
-	const array_folders = Object.keys(folder);
-	let root_index = array_folders.indexOf(".");
-	array_folders.splice(root_index, 1);
-	let parent_index = array_folders.indexOf("..");
-	array_folders.splice(root_index, 1);
-	const folders = array_folders.map((e, index) => {
-		return <FolderComponent key={index} name={e} onClick={() => goto(e)} />;
-	});
+	// generate folder icons, remove hidden folders.
+	const folders = Object.keys(folder)
+		.filter((dir) => !dir.startsWith("."))
+		.map((e, index) => {
+			return (
+				<FolderComponent key={index} name={e} onClick={() => goto(e)} />
+			);
+		});
 
 	// generate file icons.
 	const files = folder["."]
 		.sort((a, b) => a.split(".").at(-1).localeCompare(b.split(".").at(-1)))
 		.map((e, index) => {
+			const filepath = getFilePath(folder[".."], e);
 			return (
 				<FileComponent
-					key={index}
+					key={filepath}
 					name={e}
-					path={folder[".."] + "/" + e}
-					onClick={() => download(folder[".."] + "/" + e, e)}
+					path={filepath}
+					onClick={() => download(filepath, e)}
 				/>
 			);
 		});
@@ -75,7 +85,7 @@ function FilesContainer(props) {
 	return (
 		<div className={styles.FilesContainer}>
 			{/* go back one folder */}
-			<input type="file" />
+			<input type="file" onChange={upload} />
 			<FolderComponent name={"←"} onClick={() => goBack()} />
 			{folders}
 			{files}
