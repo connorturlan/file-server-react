@@ -33,7 +33,7 @@ export const sendFile = async (root, { name, type }, data) => {
 	const res = await fetch(file_url, {
 		method: "POST",
 		/* mode: "no-cors", */
-		headers: { "Content-Type": type, Accept: "text/html" },
+		headers: { "Content-Type": type },
 		body: data,
 	});
 
@@ -53,5 +53,5 @@ export const uploadFile = async (filepath, file) => {
 	reader.onload = () => {
 		sendFile(filepath, file, reader.result);
 	};
-	reader.readAsBinaryString(file);
+	reader.readAsArrayBuffer(file);
 };
