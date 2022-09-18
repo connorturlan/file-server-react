@@ -14,6 +14,8 @@ function FilesContainer(props) {
 	const [folder, setFolder] = useState(elements);
 	const [dir, setDir] = useState([]);
 
+	const [fileView, setFileView] = useState(0);
+
 	useEffect(() => {
 		const getElements = async () => {
 			const tree = await getFileTree();
@@ -58,6 +60,25 @@ function FilesContainer(props) {
 		);
 	};
 
+	const changeView = (event) => {
+		setFileView((fileView + 1) % 2);
+	};
+
+	// evaluate the view class.
+	const classlist = [styles.files];
+	let isPreview = false;
+	switch (fileView) {
+		default:
+		case 0:
+			classlist.push(styles.grid);
+			isPreview = true;
+			break;
+		case 1:
+			classlist.push(styles.list);
+			break;
+	}
+	const classes = classlist.join(" ");
+
 	// generate folder icons, remove hidden folders.
 	const folders = Object.keys(folder)
 		.filter((dir) => !dir.startsWith("."))
@@ -67,8 +88,9 @@ function FilesContainer(props) {
 			);
 		});
 
-	// generate file icons.
+	// generate files, remove hidden files.
 	const files = folder["."]
+		.filter((dir) => !dir.startsWith("."))
 		.sort((a, b) => a.split(".").at(-1).localeCompare(b.split(".").at(-1)))
 		.map((e, index) => {
 			const filepath = getFilePath(folder[".."], e);
@@ -78,13 +100,15 @@ function FilesContainer(props) {
 					name={e}
 					path={filepath}
 					onClick={() => download(filepath, e)}
+					isPreview={isPreview}
 				/>
 			);
 		});
 
 	return (
-		<div className={styles.FilesContainer}>
+		<div className={classes}>
 			{/* go back one folder */}
+			<button onClick={changeView}>views</button>
 			<input type="file" onChange={upload} />
 			<FolderComponent name={"←"} onClick={() => goBack()} />
 			{folders}
