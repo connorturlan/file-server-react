@@ -50,6 +50,7 @@ function FilesContainer(props) {
 		// update the a leaf on the folder tree.
 		const leaf = await getFolderBranch(path);
 		setElements(patchFolderTree(path, elements, leaf));
+		loading.current = false;
 	};
 
 	const goto = (path) => {
@@ -70,10 +71,13 @@ function FilesContainer(props) {
 	};
 
 	const upload = async (event) => {
+		// hide the page while we upload the files.
+		loading.current = true;
+
 		// run the upload dialog for each file selected.
 		event.preventDefault();
-		const uploads = Array.from(event.target.files).map(
-			async (file) => await uploadFile(folder[".."], file)
+		const uploads = Array.from(event.target.files).map(async (file) =>
+			uploadFile(folder[".."], file)
 		);
 
 		// block until all files return a status.
