@@ -1,2 +1,2 @@
-import { NavigationBar } from "./NavigationBar.jsx";
-export default NavigationBar;
+import { navbar } from "./navbar.jsx";
+export default navbar;
