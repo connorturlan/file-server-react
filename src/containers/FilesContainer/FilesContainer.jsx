@@ -28,6 +28,8 @@ function FilesContainer(props) {
 			setElements(tree);
 
 			loading.current = false;
+
+			console.log(tree);
 		};
 
 		getElements();
