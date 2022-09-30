@@ -60,22 +60,25 @@ function App() {
 			<header className={styles.header}>
 				<NavigationBar></NavigationBar>
 			</header>
-			{loading ? (
-				<LoadingScreen />
-			) : (
-				<FolderViewer
-					folder={folder}
-					viewMode={viewMode}
-					navigateToFolder={navigateToFolder}
-				>
-					{dir.length > 0 && (
-						<FolderComponent
-							name={"←"}
-							onClick={() => navigateFrom()}
-						/>
-					)}
-				</FolderViewer>
-			)}
+			<main className={styles.main}>
+				<FolderSidebar folderTree={elements} currentFolder={dir} />
+				{loading ? (
+					<LoadingScreen />
+				) : (
+					<FolderViewer
+						folder={folder}
+						viewMode={viewMode}
+						navigateToFolder={navigateToFolder}
+					>
+						{dir.length > 0 && (
+							<FolderComponent
+								name={"←"}
+								onClick={() => navigateFrom()}
+							/>
+						)}
+					</FolderViewer>
+				)}
+			</main>
 		</div>
 	);
 }
