@@ -1,6 +1,6 @@
 import FileComponent from "../../components/FileComponent/FileComponent";
 import FolderComponent from "../../components/FolderComponent/FolderComponent";
-import { getFilePath } from "../../utils";
+import { downloadFile, getFilePath } from "../../utils";
 import styles from "./FolderViewer.module.scss";
 
 function FolderViewer({ children, folder, viewMode, navigateToFolder }) {
@@ -20,7 +20,7 @@ function FolderViewer({ children, folder, viewMode, navigateToFolder }) {
 	const classes = classList.join(" ");
 
 	// download a specified file.
-	const downloadFile = (filepath, filename) => {
+	const beginFileDownload = (filepath, filename) => {
 		downloadFile(filepath, filename);
 	};
 
@@ -48,7 +48,7 @@ function FolderViewer({ children, folder, viewMode, navigateToFolder }) {
 					key={filepath}
 					name={e}
 					path={filepath}
-					onClick={() => downloadFile(filepath, e)}
+					onClick={() => beginFileDownload(filepath, e)}
 					isPreview={isPreview}
 				/>
 			);

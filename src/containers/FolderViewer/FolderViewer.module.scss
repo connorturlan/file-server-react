@@ -1,8 +1,10 @@
-$cols: 10;
-$icon-size: calc((100vw - (20px * ($cols + 1))) / $cols);
+$cols: 8;
+$icon-size: calc((100% - (20px * ($cols + 1))) / $cols);
 
 .files {
 	display: grid;
+
+	padding: 20px;
 }
 
 .list {

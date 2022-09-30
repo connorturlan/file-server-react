@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./App.module.scss";
 import FolderComponent from "./components/FolderComponent/FolderComponent";
+import FolderSidebar from "./components/FolderSidebar/FolderSidebar";
 import LoadingScreen from "./components/LoadingScreen/LoadingScreen";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 import FolderViewer from "./containers/FolderViewer/FolderViewer";
