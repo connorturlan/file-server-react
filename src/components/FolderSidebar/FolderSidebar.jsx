@@ -9,18 +9,9 @@ function FolderSidebar({ folderTree, currentFolder, setFolder }) {
 	);
 
 	const renderSidebarFolders = (name = "root", folders = {}) => {
-		console.log("rendering", name, folders);
-
-		console.log(
-			"filtered",
-			Object.keys(folders).filter((dir) => !dir.startsWith("."))
-		);
-
 		const children = Object.keys(folders)
 			.filter((dir) => !dir.startsWith("."))
 			.map((dir) => renderSidebarFolders(dir, folders[dir]));
-
-		console.log(children);
 
 		return (
 			<SidebarIcon
@@ -37,7 +28,6 @@ function FolderSidebar({ folderTree, currentFolder, setFolder }) {
 	};
 
 	useEffect(() => {
-		console.log("updating sidebar");
 		setSidebarTree(renderSidebarFolders("root", folderTree));
 	}, [folderTree]);
 
