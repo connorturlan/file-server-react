@@ -20,9 +20,9 @@ $icon-size: 160px;
 .list {
 	grid-template-columns: 100%;
 	grid-auto-rows: 24px;
-	gap: 0px;
+	gap: 1px;
 
-	padding: 0px;
+	padding: 0px 10px;
 
 	& > * {
 		height: 24px;
@@ -36,7 +36,9 @@ $icon-size: 160px;
 		text-align: left;
 
 		&:hover {
-			z-index: 1;
+			z-index: 10;
+
+			outline-width: 3px;
 		}
 	}
 }

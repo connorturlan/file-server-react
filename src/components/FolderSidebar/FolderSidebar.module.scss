@@ -5,7 +5,12 @@
 @use "/styles/modules/defaults.scss";
 
 .FolderSidebar {
-	padding: 10px;
+	display: grid;
+	flex-direction: column;
+
+	height: 100%;
+
+	padding: 10px 5px;
 
 	color: palette.$font-dark;
 	text-decoration-color: palette.$font-accent;
