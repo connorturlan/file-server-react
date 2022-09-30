@@ -6,8 +6,6 @@ import LoadingScreen from "./components/LoadingScreen/LoadingScreen";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 import FolderViewer from "./containers/FolderViewer/FolderViewer";
 import {
-	downloadFile,
-	getFilePath,
 	getFolderTree,
 	getFolderBranch,
 	patchFolderTree,
@@ -34,6 +32,15 @@ function App() {
 		getElements();
 	}, []);
 
+	const updateFolderTree = async (path) => {
+		// update the a leaf on the folder tree.
+		const leaf = await getFolderBranch(path);
+		setElements(patchFolderTree(path, elements, leaf));
+
+		// update the loading state.
+		setLoading(false);
+	};
+
 	const navigateToFolder = (path) => {
 		// add the selected folder to the history.
 		setDir([...dir, path]);
@@ -44,6 +51,31 @@ function App() {
 		const newDir = [...dir];
 		newDir.pop();
 		setDir(newDir);
+	};
+
+	const beginFileUpload = async (event) => {
+		// hide the page while we upload the files.
+		setLoading(true);
+
+		// run the upload dialog for each file selected.
+		event.preventDefault();
+		const uploads = Array.from(event.target.files).map(async (file) =>
+			uploadFile(folder[".."], file)
+		);
+
+		// block until all files return a status.
+		await Promise.all(uploads);
+
+		// update the local elements.
+		const filepath = folder[".."].join("/");
+		updateFolderTree(filepath);
+	};
+
+	const changeViewMode = (event) => {
+		event.preventDefault();
+
+		// change the folder view index.
+		setViewMode((viewMode + 1) % 2);
 	};
 
 	// get the folder to view.
@@ -58,7 +90,10 @@ function App() {
 
 	return (
 		<div className={styles.App}>
-			<NavigationBar className={styles.header} />
+			<NavigationBar className={styles.header}>
+				<input type="file" onChange={beginFileUpload} />
+				<button onClick={changeViewMode}>View</button>
+			</NavigationBar>
 			<main className={styles.main}>
 				<FolderSidebar folderTree={elements} currentFolder={dir} />
 				{loading ? (

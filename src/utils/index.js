@@ -51,16 +51,15 @@ export const sendFile = async (root, { name, type }, data) => {
 	// post the data.
 	const res = await fetch(file_url, {
 		method: "POST",
-		/* mode: "no-cors", */
 		headers: { "Content-Type": type },
 		body: data,
 	});
 
-	console.log("status:", res.status);
+	console.log("file uploaded attempted with status:", res.status);
 
 	// check the status of the request.
-	if (res.status != 202) {
-		alert("error while uploading file.");
+	if (res.status != 201) {
+		alert(`error while uploading file. status code: ${res.status}`);
 	} else {
 		console.log("success.");
 	}
