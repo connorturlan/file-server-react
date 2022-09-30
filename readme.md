@@ -35,6 +35,17 @@ The app should:
 ## Future Plans
 
 -   Use a .env file to for routers to the file server to provide the option for other web servers to be used.
+-   Allow the user to create folders.
+-   Allow the user to copy and move files and folders.
+    -   Extend to rename items.
+-   Allow the user to delete files and folders.
+-   Add responsive design.
+-   Add icons for common functions to improve UX.
+
+### Potentially
+
+-   Show a breadcrumb trail.
+-   Flesh out upload dialog.
 
 ## Related Projects
 

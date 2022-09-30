@@ -108,7 +108,7 @@ function App() {
 						viewMode={viewMode}
 						navigateToFolder={navigateToFolder}
 					>
-						{dir.length > 0 && dir[0] && (
+						{dir.length > 0 && (
 							<FolderComponent
 								name={"←"}
 								onClick={() => navigateFrom()}

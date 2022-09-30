@@ -27,8 +27,8 @@ function FolderSidebar({ folderTree, currentFolder, setFolder }) {
 				folderName={name}
 				className={styles.icon}
 				onButtonPress={() => {
-					console.log(folders[".."][0].slice(1).split("/") ?? []);
-					setFolder(folders[".."][0].slice(1).split("/") || []);
+					const newDir = folders[".."][0].slice(1).split("/");
+					setFolder(newDir[0] ? newDir : []);
 				}}
 			>
 				{children}
