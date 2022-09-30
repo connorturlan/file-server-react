@@ -5,16 +5,15 @@
 @use "/styles/modules/defaults.scss";
 
 .NavigationBar {
-	position: fixed;
+	position: sticky;
 	top: 0px;
 	left: 0px;
-	right: 0px;
+	/* right: 0px; */
 
-	width: 100%;
-	min-height: 70px;
+	height: 40px;
 
+	// margin: 0px;
 	padding: 0px;
-	/* margin-bottom: 70px; */
 
 	display: flex;
 	justify-content: end;
@@ -24,10 +23,10 @@
 	box-shadow: 0px 6px 4px palette.$shadow;
 
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 24px;
+	font-size: 10px;
 
 	color: palette.$font-light;
-	background-color: palette.$light;
+	background-color: palette.$dark;
 
 	z-index: 1;
 

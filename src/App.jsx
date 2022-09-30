@@ -58,9 +58,7 @@ function App() {
 
 	return (
 		<div className={styles.App}>
-			<header className={styles.header}>
-				<NavigationBar></NavigationBar>
-			</header>
+			<NavigationBar className={styles.header} />
 			<main className={styles.main}>
 				<FolderSidebar folderTree={elements} currentFolder={dir} />
 				{loading ? (
