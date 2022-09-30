@@ -92,10 +92,14 @@ function App() {
 		<div className={styles.App}>
 			<NavigationBar className={styles.header}>
 				<input type="file" onChange={beginFileUpload} />
-				<button onClick={changeViewMode}>View</button>
+				<button onClick={changeViewMode}>View: {viewMode}</button>
 			</NavigationBar>
 			<main className={styles.main}>
-				<FolderSidebar folderTree={elements} currentFolder={dir} />
+				<FolderSidebar
+					folderTree={elements}
+					currentFolder={dir}
+					setFolder={setDir}
+				/>
 				{loading ? (
 					<LoadingScreen />
 				) : (

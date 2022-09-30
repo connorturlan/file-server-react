@@ -1,3 +1,13 @@
+@use "/styles/partials/palette";
+@use "/styles/partials/typography";
+@use "/styles/partials/devices";
+
+@use "/styles/modules/defaults.scss";
+
 .FolderSidebar {
-	background-color: white;
+	padding: 10px;
+
+	color: palette.$font-dark;
+	text-decoration-color: palette.$font-accent;
+	background-color: palette.$light;
 }

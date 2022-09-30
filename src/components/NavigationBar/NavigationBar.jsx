@@ -17,7 +17,7 @@ function NavigationBar({ children }) {
 				className={styles.NavigationBar__ToggleLabel}
 				htmlFor="NavigationBar__Menu"
 			></label>
-			<h1 className={styles.NavigationBar__Icon}>File Server</h1>
+			<h1 className={styles.NavigationBar__Icon}>PyFi Server</h1>
 			<div onClick={hide} className={styles.NavigationBar__Buttons}>
 				{children}
 			</div>
