@@ -23,7 +23,14 @@ function FolderSidebar({ folderTree, currentFolder, setFolder }) {
 		console.log(children);
 
 		return (
-			<SidebarIcon folderName={name} className={styles.icon}>
+			<SidebarIcon
+				folderName={name}
+				className={styles.icon}
+				onButtonPress={() => {
+					console.log(folders[".."][0].slice(1).split("/") ?? []);
+					setFolder(folders[".."][0].slice(1).split("/") || []);
+				}}
+			>
 				{children}
 			</SidebarIcon>
 		);
