@@ -5,10 +5,10 @@ import styles from "./FolderSidebar.module.scss";
 
 function FolderSidebar({ folderTree, currentFolder, setFolder }) {
 	const [sidebarTree, setSidebarTree] = useState(
-		<SidebarIcon folderName={"root"}></SidebarIcon>
+		<SidebarIcon folderName={""}></SidebarIcon>
 	);
 
-	const renderSidebarFolders = (name = "root", folders = {}) => {
+	const renderSidebarFolders = (name = "Home", folders = {}) => {
 		const children = Object.keys(folders)
 			.filter((dir) => !dir.startsWith("."))
 			.map((dir) => renderSidebarFolders(dir, folders[dir]));
@@ -28,7 +28,7 @@ function FolderSidebar({ folderTree, currentFolder, setFolder }) {
 	};
 
 	useEffect(() => {
-		setSidebarTree(renderSidebarFolders("root", folderTree));
+		setSidebarTree(renderSidebarFolders("Home", folderTree));
 	}, [folderTree]);
 
 	return <div className={styles.FolderSidebar}>{sidebarTree}</div>;

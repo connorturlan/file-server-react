@@ -1,13 +1,20 @@
+@use "/styles/partials/palette";
+@use "/styles/partials/typography";
+@use "/styles/partials/devices";
+
+@use "/styles/modules/defaults.scss";
+
 .LoadingScreen {
 	width: 100%;
 	height: 100%;
 
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	margin: 0;
+	padding: 0;
 
-	color: white;
-	font-size: 100px;
+	@include defaults.flex-center;
 
-	background-color: black;
+	color: palette.$font-light;
+	font-size: 36pt;
+
+	background-color: palette.$dark;
 }
