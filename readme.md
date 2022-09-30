@@ -36,6 +36,10 @@ The app should:
 
 -   Use a .env file to for routers to the file server to provide the option for other web servers to be used.
 
+## Related Projects
+
+-   [Python Web Server](https://github.com/connorturlan/web-server-py) - A File Server host that this project was build to work around.
+
 ## License
 
 CC by attribution non-commercial, derivatives allowed.
