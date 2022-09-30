@@ -1,10 +1,22 @@
-import { useState } from "react";
-import styles from "App.module.scss";
+import { useEffect, useState } from "react";
+import styles from "./App.module.scss";
+import FolderComponent from "./components/FolderComponent/FolderComponent";
+import LoadingScreen from "./components/LoadingScreen/LoadingScreen";
+import NavigationBar from "./components/NavigationBar/NavigationBar";
+import FolderViewer from "./containers/FolderViewer/FolderViewer";
+import {
+	downloadFile,
+	getFilePath,
+	getFolderTree,
+	getFolderBranch,
+	patchFolderTree,
+	uploadFile,
+} from "./utils";
 
 function App() {
 	const [loading, setLoading] = useState(true);
 	const [elements, setElements] = useState({ "..": [], ".": [] });
-	const [dir, setDir] = useState();
+	const [dir, setDir] = useState([]);
 	const [viewMode, setViewMode] = useState(0);
 
 	// fetch the entire folder tree, this may take a while.
@@ -14,14 +26,24 @@ function App() {
 		const getElements = async () => {
 			const tree = await getFolderTree();
 			setElements(tree);
-
-			loading.current = false;
-
+			setLoading(false);
 			console.log(tree);
 		};
 
 		getElements();
 	}, []);
+
+	const navigateToFolder = (path) => {
+		// add the selected folder to the history.
+		setDir([...dir, path]);
+	};
+
+	const navigateFrom = () => {
+		// remove the last history entry.
+		const newDir = [...dir];
+		newDir.pop();
+		setDir(newDir);
+	};
 
 	// get the folder to view.
 	const folder =
@@ -36,15 +58,22 @@ function App() {
 	return (
 		<div className={styles.App}>
 			<header className={styles.header}>
-				<navbar></navbar>
+				<NavigationBar></NavigationBar>
 			</header>
-			<main className={styles.main}>
-				{loading ? (
-					<LoadingScreen />
-				) : (
-					<FolderViewer folder={folder} viewMode={viewMode} />
-				)}
-			</main>
+			{loading ? (
+				<LoadingScreen />
+			) : (
+				<FolderViewer
+					folder={folder}
+					viewMode={viewMode}
+					navigateToFolder={navigateToFolder}
+				>
+					<FolderComponent
+						name={"←"}
+						onClick={() => navigateFrom()}
+					/>
+				</FolderViewer>
+			)}
 		</div>
 	);
 }

@@ -1,0 +1,21 @@
+@use "../partials/palette";
+@use "../partials/typography";
+@use "../partials/devices";
+
+@mixin flex-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.background {
+	display: block;
+	width: 100vw;
+	height: 100vh;
+
+	position: fixed;
+
+	background-color: palette.$dark;
+
+	z-index: -1;
+}

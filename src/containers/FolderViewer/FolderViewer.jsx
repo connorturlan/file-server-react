@@ -1,6 +1,9 @@
+import FileComponent from "../../components/FileComponent/FileComponent";
+import FolderComponent from "../../components/FolderComponent/FolderComponent";
+import { getFilePath } from "../../utils";
 import styles from "./FolderViewer.module.scss";
 
-function FolderViewer({ folder, viewMode }) {
+function FolderViewer({ children, folder, viewMode, navigateToFolder }) {
 	// evaluate the view class.
 	const classList = [styles.files];
 	let isPreview = false;
@@ -16,12 +19,21 @@ function FolderViewer({ folder, viewMode }) {
 	}
 	const classes = classList.join(" ");
 
+	// download a specified file.
+	const downloadFile = (filepath, filename) => {
+		downloadFile(filepath, filename);
+	};
+
 	// generate folder icons, remove hidden folders.
 	const folders = Object.keys(folder)
 		.filter((dir) => !dir.startsWith("."))
 		.map((e, index) => {
 			return (
-				<FolderComponent key={index} name={e} onClick={() => goto(e)} />
+				<FolderComponent
+					key={index}
+					name={e}
+					onClick={() => navigateToFolder(e)}
+				/>
 			);
 		});
 
@@ -36,7 +48,7 @@ function FolderViewer({ folder, viewMode }) {
 					key={filepath}
 					name={e}
 					path={filepath}
-					onClick={() => download(filepath, e)}
+					onClick={() => downloadFile(filepath, e)}
 					isPreview={isPreview}
 				/>
 			);
@@ -44,11 +56,7 @@ function FolderViewer({ folder, viewMode }) {
 
 	return (
 		<div className={classes}>
-			<button onClick={changeView}>views</button>
-			{/* supply a file to upload */}
-			<input type="file" onChange={upload} />
-			{/* go back one folder */}
-			<FolderComponent name={"←"} onClick={() => goBack()} />
+			{children}
 			{folders}
 			{files}
 		</div>
