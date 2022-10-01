@@ -15,6 +15,7 @@ function FolderSidebar({ folderTree, currentFolder, setFolder }) {
 
 		return (
 			<SidebarIcon
+				key={folders[".."] + name}
 				folderName={name}
 				className={styles.icon}
 				onButtonPress={() => {

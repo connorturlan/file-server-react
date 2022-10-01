@@ -10,6 +10,7 @@ import {
 	getFolderBranch,
 	patchFolderTree,
 	uploadFile,
+	createNewFolder,
 } from "./utils";
 
 function App() {
@@ -33,6 +34,9 @@ function App() {
 	}, []);
 
 	const updateFolderTree = async (path) => {
+		// update the loading state.
+		setLoading(true);
+
 		// update the a leaf on the folder tree.
 		const leaf = await getFolderBranch(path);
 		setElements(patchFolderTree(path, elements, leaf));
@@ -43,7 +47,8 @@ function App() {
 
 	const navigateToFolder = (path) => {
 		// add the selected folder to the history.
-		setDir([...dir, path]);
+		const newDir = [...dir, path];
+		setDir(newDir);
 	};
 
 	const navigateFrom = () => {
@@ -67,8 +72,30 @@ function App() {
 		await Promise.all(uploads);
 
 		// update the local elements.
-		const filepath = folder[".."].join("/");
+		const filepath = "/" + dir.join("/");
 		updateFolderTree(filepath);
+	};
+
+	const beginFolderCreation = async (event) => {
+		// hide the page while we upload the files.
+		setLoading(true);
+
+		event.preventDefault();
+
+		const folderName = prompt("New folder name:", "New Folder");
+
+		const status = await createNewFolder(folder[".."], folderName);
+
+		console.log("creating:", folder[".."].join("/"), folderName, status);
+
+		// update the local elements.
+		/* const folderPath = "/" + dir.join("/");
+		updateFolderTree(folderPath);
+		*/
+
+		const tree = await getFolderTree();
+		setElements(tree);
+		setLoading(false);
 	};
 
 	const changeViewMode = (event) => {
@@ -78,21 +105,25 @@ function App() {
 		setViewMode((viewMode + 1) % 2);
 	};
 
-	// get the folder to view.
-	const folder =
-		dir.length == 0
-			? elements
-			: dir.reduce(
+	const getFolder = (breadcrumbs, folderTree) => {
+		return breadcrumbs.length == 0
+			? folderTree
+			: breadcrumbs.reduce(
 					(curr_folder, path) =>
-						path in curr_folder ? curr_folder[path] : elements,
-					elements
+						path in curr_folder ? curr_folder[path] : folderTree,
+					folderTree
 			  );
+	};
+
+	// get the folder to view.
+	const folder = getFolder(dir, elements);
 
 	return (
 		<div className={styles.App}>
 			<NavigationBar className={styles.header}>
 				<input type="file" onChange={beginFileUpload} />
 				<button onClick={changeViewMode}>View: {viewMode}</button>
+				<button onClick={beginFolderCreation}>Add Folder</button>
 			</NavigationBar>
 			<main className={styles.main}>
 				<FolderSidebar
@@ -104,7 +135,7 @@ function App() {
 					<LoadingScreen />
 				) : (
 					<FolderViewer
-						folder={folder}
+						folder={getFolder(dir, elements)}
 						viewMode={viewMode}
 						navigateToFolder={navigateToFolder}
 					>

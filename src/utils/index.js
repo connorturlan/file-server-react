@@ -11,11 +11,13 @@ export const getFolderBranch = async (filepath = "./share") => {
 };
 
 // patch a branch within the folder tree at the folder path.
-export const patchFolderTree = (folderpath, root, leaf) => {
-	const node = folderpath
+export const patchFolderTree = (folderPath, root, leaf) => {
+	console.log(folderPath, root, leaf);
+	const node = folderPath
 		.split("/")
 		.reduce((node, path) => (path in node ? node[path] : root), root);
 	node["."] = leaf["."];
+	console.log(root);
 	return { ...root };
 };
 
@@ -26,6 +28,8 @@ export const getFilePath = (root, filename) => root + "/" + filename;
 export const getFileURL = (filepath) => "http://localhost/files/get" + filepath;
 export const postFileURL = (filepath) =>
 	"http://localhost/files/upload" + filepath;
+export const postFolderURL = (filepath) =>
+	"http://localhost/files/mkdir" + filepath;
 
 // download a specified file.
 export const downloadFile = async (filepath, filename) => {
@@ -80,4 +84,26 @@ export const uploadFile = (filepath, file, callback = () => {}) => {
 		// read the file.
 		reader.readAsArrayBuffer(file);
 	});
+};
+
+export const createNewFolder = async (root, name) => {
+	// format the filepath.
+	const folder_path = getFilePath(root, name);
+	const folder_url = postFolderURL(folder_path);
+
+	// post the data.
+	const res = await fetch(folder_url, {
+		method: "POST",
+	});
+
+	console.log("folder creation attempted with status:", res.status);
+
+	// check the status of the request.
+	if (res.status != 201) {
+		alert(`error while creating folder. status code: ${res.status}`);
+	} else {
+		console.log("success.");
+	}
+
+	return res.status;
 };
