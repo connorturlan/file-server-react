@@ -121,9 +121,25 @@ function App() {
 	return (
 		<div className={styles.App}>
 			<NavigationBar className={styles.header}>
-				<input type="file" onChange={beginFileUpload} />
-				<button onClick={changeViewMode}>View: {viewMode}</button>
-				<button onClick={beginFolderCreation}>Add Folder</button>
+				<label for="file-upload" className={styles.header_button}>
+					Upload File
+				</label>
+				<input
+					id="file-upload"
+					className={styles.file_upload_input}
+					type="file"
+					onChange={beginFileUpload}
+					multiple
+				/>
+				<div className={styles.header_button} onClick={changeViewMode}>
+					View: {viewMode}
+				</div>
+				<div
+					className={styles.header_button}
+					onClick={beginFolderCreation}
+				>
+					Add Folder
+				</div>
 			</NavigationBar>
 			<main className={styles.main}>
 				<FolderSidebar

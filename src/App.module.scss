@@ -1,3 +1,9 @@
+@use "/styles/partials/palette";
+@use "/styles/partials/typography";
+@use "/styles/partials/devices";
+
+@use "/styles/modules/defaults.scss";
+
 #root {
 	width: 100vw;
 	height: 100vh;
@@ -23,4 +29,26 @@
 	display: grid;
 	grid-template-columns: 200px 1fr;
 	height: 100%;
+}
+
+.header {
+	&_button {
+		margin: 0px 10px;
+		border-radius: 5px;
+		padding: 5px;
+
+		background-color: palette.$neutral;
+		cursor: pointer;
+
+		&:hover {
+			border: none;
+			outline: 1px solid palette.$accent;
+		}
+	}
+}
+
+.file_upload {
+	&_input {
+		display: none;
+	}
 }
