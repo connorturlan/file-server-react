@@ -30,10 +30,9 @@
 		border-radius: inherit;
 	}
 
-	&__select {
-		align-self: stretch;
-		justify-content: flex-start;
-		position: fixed;
+	&_selected {
+		outline: 2px solid palette.$highlight;
+		background-color: palette.$complement;
 	}
 
 	&:hover {

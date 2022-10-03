@@ -16,7 +16,7 @@ import {
 	createNewFolder,
 } from "./utils";
 
-function App() {
+function FileServer() {
 	const [loading, setLoading] = useState(true);
 	const [elements, setElements] = useState({ "..": [], ".": [] });
 	const [dir, setDir] = useState([]);
@@ -130,7 +130,7 @@ function App() {
 	return (
 		<div className={styles.App}>
 			<NavigationBar className={styles.header}>
-				<label for="file-upload" className={styles.header_button}>
+				<label htmlFor="file-upload" className={styles.header_button}>
 					Upload File
 				</label>
 				<input
@@ -150,7 +150,7 @@ function App() {
 					Add Folder
 				</div>
 				<div className={styles.header_button} onClick={toggleSelection}>
-					{isSelecting ? Select : Finish}
+					{isSelecting ? "Finish" : "Select"}
 				</div>
 			</NavigationBar>
 			<main className={styles.main}>
@@ -180,4 +180,4 @@ function App() {
 	);
 }
 
-export default App;
+export default FileServer;
