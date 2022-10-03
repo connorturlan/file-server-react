@@ -33,12 +33,16 @@
 
 .header {
 	&_button {
+		min-width: 80px;
+
 		margin: 0px 10px;
 		border-radius: 5px;
-		padding: 5px 20px;
+		padding: 5px 5px;
 
 		background-color: palette.$neutral;
 		cursor: pointer;
+
+		font-size: 24pt;
 
 		&:hover {
 			border: none;

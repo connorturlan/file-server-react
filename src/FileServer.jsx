@@ -127,11 +127,21 @@ function FileServer() {
 	// get the folder to view.
 	const folder = getFolder(dir, elements);
 
+	const getIcon = (i) => {
+		switch (i) {
+			default:
+			case 0:
+				return "☷";
+			case 1:
+				return "☰";
+		}
+	};
+
 	return (
 		<div className={styles.App}>
 			<NavigationBar className={styles.header}>
 				<label htmlFor="file-upload" className={styles.header_button}>
-					Upload File
+					🗎+
 				</label>
 				<input
 					id="file-upload"
@@ -140,17 +150,17 @@ function FileServer() {
 					onChange={beginFileUpload}
 					multiple
 				/>
-				<div className={styles.header_button} onClick={changeViewMode}>
-					View: {viewMode}
-				</div>
 				<div
 					className={styles.header_button}
 					onClick={beginFolderCreation}
 				>
-					Add Folder
+					🗀+
+				</div>
+				<div className={styles.header_button} onClick={changeViewMode}>
+					🗘{getIcon(viewMode)}
 				</div>
 				<div className={styles.header_button} onClick={toggleSelection}>
-					{isSelecting ? "Finish" : "Select"}
+					{isSelecting ? "☒" : "☐"}
 				</div>
 			</NavigationBar>
 			<main className={styles.main}>

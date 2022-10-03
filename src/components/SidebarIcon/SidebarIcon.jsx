@@ -6,7 +6,7 @@ function SidebarIcon({ folderName, children, onButtonPress }) {
 			<summary className={styles.icon__summary}>
 				{folderName}
 				<button className={styles.button} onClick={onButtonPress}>
-					O
+					🗁
 				</button>
 			</summary>
 			{children}
