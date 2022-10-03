@@ -128,63 +128,55 @@ function App() {
 	const folder = getFolder(dir, elements);
 
 	return (
-		<SelectionProvider>
-			<div className={styles.App}>
-				<NavigationBar className={styles.header}>
-					<label for="file-upload" className={styles.header_button}>
-						Upload File
-					</label>
-					<input
-						id="file-upload"
-						className={styles.file_upload_input}
-						type="file"
-						onChange={beginFileUpload}
-						multiple
-					/>
-					<div
-						className={styles.header_button}
-						onClick={changeViewMode}
+		<div className={styles.App}>
+			<NavigationBar className={styles.header}>
+				<label for="file-upload" className={styles.header_button}>
+					Upload File
+				</label>
+				<input
+					id="file-upload"
+					className={styles.file_upload_input}
+					type="file"
+					onChange={beginFileUpload}
+					multiple
+				/>
+				<div className={styles.header_button} onClick={changeViewMode}>
+					View: {viewMode}
+				</div>
+				<div
+					className={styles.header_button}
+					onClick={beginFolderCreation}
+				>
+					Add Folder
+				</div>
+				<div className={styles.header_button} onClick={toggleSelection}>
+					{isSelecting ? Select : Finish}
+				</div>
+			</NavigationBar>
+			<main className={styles.main}>
+				<FolderSidebar
+					folderTree={elements}
+					currentFolder={dir}
+					setFolder={setDir}
+				/>
+				{loading ? (
+					<LoadingScreen />
+				) : (
+					<FolderViewer
+						folder={getFolder(dir, elements)}
+						viewMode={viewMode}
+						navigateToFolder={navigateToFolder}
 					>
-						View: {viewMode}
-					</div>
-					<div
-						className={styles.header_button}
-						onClick={beginFolderCreation}
-					>
-						Add Folder
-					</div>
-					<div
-						className={styles.header_button}
-						onClick={toggleSelection}
-					>
-						{isSelecting ? Select : Finish}
-					</div>
-				</NavigationBar>
-				<main className={styles.main}>
-					<FolderSidebar
-						folderTree={elements}
-						currentFolder={dir}
-						setFolder={setDir}
-					/>
-					{loading ? (
-						<LoadingScreen />
-					) : (
-						<FolderViewer
-							folder={getFolder(dir, elements)}
-							viewMode={viewMode}
-							navigateToFolder={navigateToFolder}
-						>
-							{dir.length > 0 && (
-								<FolderComponent
-									name={"←"}
-									onClick={() => navigateFrom()}
-								/>
-							)}
-						</FolderViewer>
-					)}
-				</main>
-			</div>
-		</SelectionProvider>
+						{dir.length > 0 && (
+							<FolderComponent
+								name={"←"}
+								onClick={() => navigateFrom()}
+							/>
+						)}
+					</FolderViewer>
+				)}
+			</main>
+		</div>
 	);
 }
 

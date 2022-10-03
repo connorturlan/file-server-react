@@ -1,7 +1,11 @@
+import { useContext } from "react";
+import { SelectionContext } from "../../contexts/SelectionContext";
 import { getFileURL } from "../../utils";
 import styles from "./FileComponent.module.scss";
 
 function FileComponent({ name, path, onClick, isPreview }) {
+	const { isSelecting } = useContext(SelectionContext);
+
 	const imagePreview =
 		/.(jpe?g|gif|png|webp|webm)$/i.test(name.toLowerCase()) && isPreview ? (
 			<img
@@ -13,10 +17,14 @@ function FileComponent({ name, path, onClick, isPreview }) {
 			false
 		);
 
-	return (
-		<button className={styles.file} onClick={onClick}>
+	return isSelecting ? (
+		<input type="selecting" className={styles.file}>
 			{imagePreview || name}
-		</button>
+		</input>
+	) : (
+		<div className={styles.file} onClick={onClick}>
+			{imagePreview || name}
+		</div>
 	);
 }
 
