@@ -35,14 +35,16 @@
 	&_button {
 		margin: 0px 10px;
 		border-radius: 5px;
-		padding: 5px;
+		padding: 5px 20px;
 
 		background-color: palette.$neutral;
 		cursor: pointer;
 
 		&:hover {
 			border: none;
-			outline: 1px solid palette.$accent;
+			//outline: 1px solid palette.$accent;
+
+			background-color: palette.$light;
 		}
 	}
 }
