@@ -143,19 +143,16 @@ export const moveItem = async (src, dst) => {
 	});
 };
 
-export const deleteItem = async (src, dst) => {
+export const deleteItem = async (itemPath) => {
 	return new Promise(async (resolve, reject) => {
-		const itemURL = patchMoveURL(src);
-
-		const body = JSON.stringify({ destination: dst });
+		const itemURL = deleteItemURL(itemPath);
 
 		const res = await fetch(itemURL, {
-			method: "PATCH",
-			body,
+			method: "DELETE",
 		});
 
-		if (res.status != 202)
-			reject(`Move rejected with status: ${res.status}`);
-		else resolve(`Move accepted with status: ${res.status}`);
+		if (res.status != 204)
+			reject(`Delete rejected with status: ${res.status}`);
+		else resolve(`Delete accepted with status: ${res.status}`);
 	});
 };

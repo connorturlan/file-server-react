@@ -157,6 +157,12 @@ function FileServer() {
 
 	const beginDelete = async () => {
 		//confirm the deletion.
+		if (
+			!confirm(
+				`Are you sure you want to delete ${selection.length} item(s)`
+			)
+		)
+			return;
 
 		// copy each item on the clipboard to the new destination.
 		const promises = selection.map((itemPath) => {
@@ -166,8 +172,7 @@ function FileServer() {
 		// await all responses.
 		await Promise.all(promises);
 
-		// clear the clipboard.
-		setClipboard([]);
+		setSelecting(false);
 
 		await reloadFolderTree();
 	};
@@ -239,6 +244,9 @@ function FileServer() {
 				</div>
 				<div className={styles.header_button} onClick={beginMove}>
 					move
+				</div>
+				<div className={styles.header_button} onClick={beginDelete}>
+					delete
 				</div>
 			</NavigationBar>
 			<main className={styles.main}>
