@@ -33,7 +33,7 @@ const patchCopyURL = (filepath) => "http://localhost/files/copy/" + filepath;
 const patchMoveURL = (filepath) => "http://localhost/files/move/" + filepath;
 const deleteItemURL = (filepath) => "http://localhost/files/delete/" + filepath;
 
-// download a specified file.
+// force the browser to download a specified file.
 export const downloadFile = async (filepath, filename) => {
 	const res = await fetch(getFileURL(filepath));
 
@@ -49,7 +49,7 @@ export const downloadFile = async (filepath, filename) => {
 };
 
 // send a file to the file server.
-export const sendFile = async (root, { name, type }, data) => {
+export const sendFileBytes = async (root, { name, type }, data) => {
 	// format the filepath.
 	const file_path = getFilePath(root, name);
 	const file_url = postFileURL(file_path);
@@ -80,7 +80,7 @@ export const uploadFile = (filepath, file, callback = () => {}) => {
 
 		// when the file completes its read, read the file then resolve the upload promise.
 		reader.onload = async () => {
-			resolve(await sendFile(filepath, file, reader.result));
+			resolve(await sendFileBytes(filepath, file, reader.result));
 		};
 
 		// read the file.
