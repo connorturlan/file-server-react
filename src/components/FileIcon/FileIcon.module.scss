@@ -4,7 +4,7 @@
 
 @use "/styles/modules/defaults.scss";
 
-.file {
+.base {
 	color: palette.$font-dark;
 	background-color: palette.$light;
 
@@ -17,12 +17,12 @@
 		border-radius: inherit;
 	}
 
-	&_selected {
-		outline: 2px solid palette.$complement;
-		background-color: palette.$complement;
-	}
-
 	&:hover {
 		outline: 5px solid palette.$accent;
 	}
+}
+
+.selected {
+	outline: 2px solid palette.$complement;
+	background-color: palette.$complement;
 }

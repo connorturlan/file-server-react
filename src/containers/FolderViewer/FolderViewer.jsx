@@ -35,6 +35,7 @@ function FolderViewer({ children, folder, viewMode, navigateToFolder }) {
 					key={index}
 					name={e}
 					onClick={() => navigateToFolder(e)}
+					path={getFilePath(folder[".."], e)}
 				/>
 			);
 		});

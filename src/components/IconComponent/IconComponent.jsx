@@ -2,7 +2,7 @@ import styles from "./IconComponent.module.scss";
 import { useContext } from "react";
 import { SelectionContext } from "../../contexts/SelectionContext";
 
-function IconComponent({ className, children, onClick }) {
+function IconComponent({ styleClass, children, path, onClick }) {
 	const { isSelecting, selection, setSelection } =
 		useContext(SelectionContext);
 
@@ -19,10 +19,20 @@ function IconComponent({ className, children, onClick }) {
 		setSelection(newSelection.slice());
 	};
 
-	const classList = className ? `${styles.icon} ${className}` : styles.icon;
+	const baseClass = styleClass
+		? `${styles.icon} ${styleClass.base}`
+		: styles.icon;
+
+	// toggle the class depending on if this file is selected or not.
+	const classList = selection.includes(path)
+		? `${baseClass} ${styleClass.selected}`
+		: baseClass;
 
 	return (
-		<button className={classList} onClick={onClick}>
+		<button
+			className={classList}
+			onClick={isSelecting ? beginSelect : onClick}
+		>
 			{children}
 		</button>
 	);

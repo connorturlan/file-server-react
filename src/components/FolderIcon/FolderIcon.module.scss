@@ -4,16 +4,16 @@
 
 @use "/styles/modules/defaults.scss";
 
-.folder {
+.base {
 	color: palette.$font-dark;
 	background-color: palette.$accent;
-
-	&_selected {
-		outline: 2px solid palette.$complement;
-		background-color: palette.$complement;
-	}
 
 	&:hover {
 		outline: 5px solid palette.$bright;
 	}
+}
+
+.selected {
+	outline: 2px solid palette.$complement;
+	background-color: palette.$complement;
 }

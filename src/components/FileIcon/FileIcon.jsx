@@ -5,8 +5,8 @@ import { getFileURL } from "../../utils";
 import IconComponent from "../IconComponent/IconComponent";
 
 function FileIcon({ name, path, onClick, isPreview }) {
-	const { isSelecting, selection, setSelection } =
-		useContext(SelectionContext);
+	/* const { isSelecting, selection, setSelection } =
+		useContext(SelectionContext); */
 
 	// generate the image preview if the file is an image.
 	const imagePreview = /.(jpe?g|gif|png|webp|webm)$/i.test(
@@ -14,13 +14,13 @@ function FileIcon({ name, path, onClick, isPreview }) {
 	) &&
 		isPreview && (
 			<img
-				className={styles.file__image}
+				className={styles.base__image}
 				src={getFileURL(path)}
 				title={name}
 			></img>
 		);
 
-	// toggle this files selection on the clipboard.
+	/* // toggle this files selection on the clipboard.
 	const beginSelect = () => {
 		let newSelection = selection;
 		if (selection.includes(path)) {
@@ -35,14 +35,11 @@ function FileIcon({ name, path, onClick, isPreview }) {
 
 	// toggle the class depending on if this file is selected or not.
 	const classList = selection.includes(path)
-		? `${styles.file} ${styles.file_selected}`
-		: styles.file;
+		? `${styles.base} ${styles.selected}`
+		: styles.base; */
 
 	return (
-		<IconComponent
-			className={classList}
-			onClick={isSelecting ? beginSelect : onClick}
-		>
+		<IconComponent styleClass={styles} onClick={onClick} path={path}>
 			{imagePreview || name}
 		</IconComponent>
 	);
