@@ -12,6 +12,7 @@ import {
 	patchFolderTree,
 	uploadFile,
 	createNewFolder,
+	copyItem,
 } from "./utils";
 
 function FileServer() {
@@ -20,21 +21,16 @@ function FileServer() {
 	const [dir, setDir] = useState([]);
 	const [viewMode, setViewMode] = useState(0);
 
-	const { isSelecting, setSelecting } = useContext(SelectionContext);
+	const { isSelecting, setSelecting, selection } =
+		useContext(SelectionContext);
 
-	// fetch the entire folder tree, this may take a while.
-	// this is going to be replaces with the folder leaf method to get the folder tree as
-	// ...the user explores the server.
-	useEffect(() => {
-		const getElements = async () => {
-			const tree = await getFolderTree();
-			setElements(tree);
-			setLoading(false);
-			console.log(tree);
-		};
+	const [clipboard, setClipboard] = useState([]);
 
-		getElements();
-	}, []);
+	const reloadFolderTree = async () => {
+		const tree = await getFolderTree();
+		setElements(tree);
+		setLoading(false);
+	};
 
 	const updateFolderTree = async (path) => {
 		// update the loading state.
@@ -96,9 +92,7 @@ function FileServer() {
 		updateFolderTree(folderPath);
 		*/
 
-		const tree = await getFolderTree();
-		setElements(tree);
-		setLoading(false);
+		await reloadFolderTree();
 	};
 
 	const changeViewMode = (event) => {
@@ -111,6 +105,43 @@ function FileServer() {
 	const toggleSelection = () => {
 		setSelecting(!isSelecting);
 	};
+
+	const addToClipboard = () => {
+		setClipboard(selection.slice());
+		setSelecting(false);
+	};
+
+	const beginCopy = async () => {
+		// get the destination path.
+		const destinationPath = "/" + dir.join("/") + "/";
+
+		// copy each item on the clipboard to the new destination.
+		const promises = clipboard.map((itemPath) => {
+			const itemName = itemPath.endsWith("/")
+				? ""
+				: itemPath.split("/").at(-1);
+			return copyItem(itemPath, destinationPath + itemName);
+		});
+
+		// await all responses.
+		await Promise.all(promises);
+
+		// clear the clipboard.
+		setClipboard([]);
+
+		await reloadFolderTree();
+	};
+
+	// fetch the entire folder tree, this may take a while.
+	// this is going to be replaces with the folder leaf method to get the folder tree as
+	// ...the user explores the server.
+	useEffect(() => {
+		const getElements = async () => {
+			await reloadFolderTree();
+		};
+
+		getElements();
+	}, []);
 
 	const getFolder = (breadcrumbs, folderTree) => {
 		return breadcrumbs.length == 0
@@ -159,6 +190,12 @@ function FileServer() {
 				</div>
 				<div className={styles.header_button} onClick={toggleSelection}>
 					{isSelecting ? "☒" : "☐"}
+				</div>
+				<div className={styles.header_button} onClick={addToClipboard}>
+					copy
+				</div>
+				<div className={styles.header_button} onClick={beginCopy}>
+					paste
 				</div>
 			</NavigationBar>
 			<main className={styles.main}>

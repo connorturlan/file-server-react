@@ -8,6 +8,10 @@ function IconComponent({ styleClass, children, path, onClick }) {
 
 	// toggle this files selection on the clipboard.
 	const beginSelect = () => {
+		if (!path) {
+			return;
+		}
+
 		let newSelection = selection;
 		if (selection.includes(path)) {
 			newSelection = newSelection.filter((item) => item != path);

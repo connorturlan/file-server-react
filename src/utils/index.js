@@ -30,6 +30,8 @@ export const postFileURL = (filepath) =>
 	"http://localhost/files/upload" + filepath;
 export const postFolderURL = (filepath) =>
 	"http://localhost/files/mkdir" + filepath;
+export const patchCopyURL = (filepath) =>
+	"http://localhost/files/copy" + filepath;
 
 // download a specified file.
 export const downloadFile = async (filepath, filename) => {
@@ -106,4 +108,21 @@ export const createNewFolder = async (root, name) => {
 	}
 
 	return res.status;
+};
+
+export const copyItem = async (src, dst) => {
+	return new Promise(async (resolve, reject) => {
+		const itemURL = patchCopyURL(src);
+
+		const body = JSON.stringify({ destination: dst });
+
+		const res = await fetch(itemURL, {
+			method: "PATCH",
+			body,
+		});
+
+		if (res.status != 201)
+			reject(`Copy rejected with status: ${res.status}`);
+		else resolve(`Copy accepted with status: ${res.status}`);
+	});
 };
