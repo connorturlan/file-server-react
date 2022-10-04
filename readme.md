@@ -30,6 +30,8 @@ The app should:
 
 ## Implementation
 
+.env is required in the root dir with the parameters `HOST_URL` and `HOST_PORT`.
+
 ## Known Issues
 
 -   Use isn't alerted when there is an error with the requested copy/move/rename.
@@ -39,7 +41,6 @@ The app should:
 
 ## Future Plans
 
--   Use a .env file to for routers to the file server to provide the option for other web servers to be used.
 -   Add responsive design.
 -   Add icons for common functions to improve UX.
 -   Fix the folder tree patch function.

@@ -1,12 +1,18 @@
+console.log(import.meta.env);
+
+const fileServerURL = `http://${import.meta.env.HOST_URL}:${
+	import.meta.env.HOST_PORT
+}/`;
+
 // get the entire folder tree.
 export const getFolderTree = async (filepath = "./share") => {
-	const res = await fetch("http://localhost/files/all");
+	const res = await fetch(fileServerURL + "files/all");
 	return await res.json();
 };
 
 // get a specified branch on the folder tree.
 export const getFolderBranch = async (filepath = "./share") => {
-	const res = await fetch("http://localhost/files/folder" + filepath);
+	const res = await fetch(fileServerURL + "files/folder" + filepath);
 	return await res.json();
 };
 
@@ -25,13 +31,12 @@ export const patchFolderTree = (folderPath, root, leaf) => {
 export const getFilePath = (root, filename) => [...root, filename].join("/");
 
 // return the corresponding http urls for a given filepath.
-export const getFileURL = (filepath) =>
-	"http://localhost/files/get/" + filepath;
-const postFileURL = (filepath) => "http://localhost/files/upload/" + filepath;
-const postFolderURL = (filepath) => "http://localhost/files/mkdir/" + filepath;
-const patchCopyURL = (filepath) => "http://localhost/files/copy/" + filepath;
-const patchMoveURL = (filepath) => "http://localhost/files/move/" + filepath;
-const deleteItemURL = (filepath) => "http://localhost/files/delete/" + filepath;
+export const getFileURL = (filepath) => fileServerURL + "files/get/" + filepath;
+const postFileURL = (filepath) => fileServerURL + "files/upload/" + filepath;
+const postFolderURL = (filepath) => fileServerURL + "files/mkdir/" + filepath;
+const patchCopyURL = (filepath) => fileServerURL + "files/copy/" + filepath;
+const patchMoveURL = (filepath) => fileServerURL + "files/move/" + filepath;
+const deleteItemURL = (filepath) => fileServerURL + "files/delete/" + filepath;
 
 // force the browser to download a specified file.
 export const downloadFile = async (filepath, filename) => {
