@@ -26,12 +26,11 @@ export const getFilePath = (root, filename) => root + "/" + filename;
 
 // return the corresponding http urls for a given filepath.
 export const getFileURL = (filepath) => "http://localhost/files/get" + filepath;
-export const postFileURL = (filepath) =>
-	"http://localhost/files/upload" + filepath;
-export const postFolderURL = (filepath) =>
-	"http://localhost/files/mkdir" + filepath;
-export const patchCopyURL = (filepath) =>
-	"http://localhost/files/copy" + filepath;
+const postFileURL = (filepath) => "http://localhost/files/upload" + filepath;
+const postFolderURL = (filepath) => "http://localhost/files/mkdir" + filepath;
+const patchCopyURL = (filepath) => "http://localhost/files/copy" + filepath;
+const patchMoveURL = (filepath) => "http://localhost/files/move" + filepath;
+const deleteItemURL = (filepath) => "http://localhost/files/delete" + filepath;
 
 // download a specified file.
 export const downloadFile = async (filepath, filename) => {
@@ -124,5 +123,39 @@ export const copyItem = async (src, dst) => {
 		if (res.status != 201)
 			reject(`Copy rejected with status: ${res.status}`);
 		else resolve(`Copy accepted with status: ${res.status}`);
+	});
+};
+
+export const moveItem = async (src, dst) => {
+	return new Promise(async (resolve, reject) => {
+		const itemURL = patchMoveURL(src);
+
+		const body = JSON.stringify({ destination: dst });
+
+		const res = await fetch(itemURL, {
+			method: "PATCH",
+			body,
+		});
+
+		if (res.status != 202)
+			reject(`Move rejected with status: ${res.status}`);
+		else resolve(`Move accepted with status: ${res.status}`);
+	});
+};
+
+export const deleteItem = async (src, dst) => {
+	return new Promise(async (resolve, reject) => {
+		const itemURL = patchMoveURL(src);
+
+		const body = JSON.stringify({ destination: dst });
+
+		const res = await fetch(itemURL, {
+			method: "PATCH",
+			body,
+		});
+
+		if (res.status != 202)
+			reject(`Move rejected with status: ${res.status}`);
+		else resolve(`Move accepted with status: ${res.status}`);
 	});
 };

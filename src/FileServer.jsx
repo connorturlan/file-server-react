@@ -13,6 +13,8 @@ import {
 	uploadFile,
 	createNewFolder,
 	copyItem,
+	moveItem,
+	deleteItem,
 } from "./utils";
 
 function FileServer() {
@@ -132,6 +134,44 @@ function FileServer() {
 		await reloadFolderTree();
 	};
 
+	const beginMove = async () => {
+		// get the destination path.
+		const destinationPath = "/" + dir.join("/") + "/";
+
+		// copy each item on the clipboard to the new destination.
+		const promises = clipboard.map((itemPath) => {
+			const itemName = itemPath.endsWith("/")
+				? ""
+				: itemPath.split("/").at(-1);
+			return moveItem(itemPath, destinationPath + itemName);
+		});
+
+		// await all responses.
+		await Promise.all(promises);
+
+		// clear the clipboard.
+		setClipboard([]);
+
+		await reloadFolderTree();
+	};
+
+	const beginDelete = async () => {
+		//confirm the deletion.
+
+		// copy each item on the clipboard to the new destination.
+		const promises = selection.map((itemPath) => {
+			return deleteItem(itemPath);
+		});
+
+		// await all responses.
+		await Promise.all(promises);
+
+		// clear the clipboard.
+		setClipboard([]);
+
+		await reloadFolderTree();
+	};
+
 	// fetch the entire folder tree, this may take a while.
 	// this is going to be replaces with the folder leaf method to get the folder tree as
 	// ...the user explores the server.
@@ -192,10 +232,13 @@ function FileServer() {
 					{isSelecting ? "☒" : "☐"}
 				</div>
 				<div className={styles.header_button} onClick={addToClipboard}>
-					copy
+					clip
 				</div>
 				<div className={styles.header_button} onClick={beginCopy}>
-					paste
+					copy
+				</div>
+				<div className={styles.header_button} onClick={beginMove}>
+					move
 				</div>
 			</NavigationBar>
 			<main className={styles.main}>
