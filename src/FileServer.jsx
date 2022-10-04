@@ -101,11 +101,6 @@ function FileServer() {
 
 		console.log("creating:", folder[".."].join("/"), folderName, status);
 
-		// update the local elements.
-		/* const folderPath = "/" + dir.join("/");
-		updateFolderTree(folderPath);
-		*/
-
 		await reloadFolderTree();
 	};
 
@@ -186,7 +181,24 @@ function FileServer() {
 		await Promise.allSettled(promises);
 
 		setSelecting(false);
+		await reloadFolderTree();
+	};
 
+	const beginRename = async () => {
+		// copy each item on the clipboard to the new destination.
+		const promises = selection.map((itemPath) => {
+			const fileName = itemPath.split("/").at(-1);
+			const newFileName = prompt(`Rename ${fileName} to:`, fileName);
+			return (
+				fileName != newFileName &&
+				moveItem(itemPath, "/" + dir.join("/") + "/" + newFileName)
+			);
+		});
+
+		// await all responses.
+		await Promise.allSettled(promises);
+
+		setSelecting(false);
 		await reloadFolderTree();
 	};
 
@@ -216,7 +228,11 @@ function FileServer() {
 	return (
 		<div className={styles.App}>
 			<NavigationBar className={styles.header}>
-				<label htmlFor="file-upload" className={styles.header_button}>
+				<label
+					htmlFor="file-upload"
+					className={styles.header_button}
+					title={"Upload Files"}
+				>
 					🗎+
 				</label>
 				<input
@@ -229,17 +245,37 @@ function FileServer() {
 				<div
 					className={styles.header_button}
 					onClick={beginFolderCreation}
+					title={"Create Folder"}
 				>
 					🗀+
 				</div>
-				<div className={styles.header_button} onClick={changeViewMode}>
-					🗘{getIcon(viewMode)}
+				<div
+					className={styles.header_button}
+					onClick={changeViewMode}
+					title={"Change View"}
+				>
+					👁{getIcon(viewMode)}
 				</div>
-				<div className={styles.header_button} onClick={toggleSelection}>
+				<div
+					className={styles.header_button}
+					onClick={toggleSelection}
+					title={"Select"}
+				>
 					{isSelecting ? "☒" : "☐"}
 				</div>
-				<div className={styles.header_button} onClick={beginDelete}>
-					delete
+				<div
+					className={styles.header_button}
+					onClick={beginDelete}
+					title={"Delete"}
+				>
+					🗑
+				</div>
+				<div
+					className={styles.header_button}
+					onClick={beginRename}
+					title={"Rename"}
+				>
+					Rename
 				</div>
 
 				{clipboardMode == 0 ? (
@@ -247,19 +283,25 @@ function FileServer() {
 						<div
 							className={styles.header_button}
 							onClick={prepareCopy}
+							title={"Copy"}
 						>
-							copy
+							🗎🗎
 						</div>
 						<div
 							className={styles.header_button}
 							onClick={prepareMove}
+							title={"Cut"}
 						>
-							move
+							✄
 						</div>
 					</>
 				) : (
-					<div className={styles.header_button} onClick={beginPaste}>
-						paste
+					<div
+						className={styles.header_button}
+						onClick={beginPaste}
+						title={"Paste"}
+					>
+						Paste
 					</div>
 				)}
 			</NavigationBar>

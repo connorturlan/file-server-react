@@ -19,7 +19,6 @@ function IconComponent({ styleClass, children, path, onClick }) {
 			newSelection.push(path);
 		}
 
-		console.log(selection, newSelection);
 		setSelection(newSelection.slice());
 	};
 
