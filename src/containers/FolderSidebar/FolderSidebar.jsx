@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import SidebarIcon from "../SidebarIcon/SidebarIcon";
+import SidebarIcon from "./SidebarIcon/SidebarIcon";
 import styles from "./FolderSidebar.module.scss";
 
 function FolderSidebar({ folderTree, currentFolder, setFolder }) {

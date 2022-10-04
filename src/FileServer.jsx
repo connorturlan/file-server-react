@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import styles from "./App.module.scss";
 import FolderIcon from "./components/FolderIcon/FolderIcon";
-import FolderSidebar from "./components/FolderSidebar/FolderSidebar";
+import FolderSidebar from "./containers/FolderSidebar/FolderSidebar";
 import LoadingScreen from "./components/LoadingScreen/LoadingScreen";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 import FolderViewer from "./containers/FolderViewer/FolderViewer";

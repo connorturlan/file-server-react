@@ -19,6 +19,7 @@ function IconComponent({ styleClass, children, path, onClick }) {
 		setSelection(newSelection.slice());
 	};
 
+	// construct the base class.
 	const baseClass = styleClass
 		? `${styles.icon} ${styleClass.base}`
 		: styles.icon;

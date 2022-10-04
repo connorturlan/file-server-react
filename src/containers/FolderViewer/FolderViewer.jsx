@@ -1,6 +1,4 @@
-import FileComponent from "../../components/FileComponent/FileComponent";
 import FileIcon from "../../components/FileIcon/FileIcon";
-import FolderComponent from "../../components/FolderComponent/FolderComponent";
 import FolderIcon from "../../components/FolderIcon/FolderIcon";
 import { downloadFile, getFilePath } from "../../utils";
 import styles from "./FolderViewer.module.scss";
