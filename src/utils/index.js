@@ -1,5 +1,3 @@
-console.log(import.meta.env);
-
 const fileServerURL = `http://${import.meta.env.HOST_URL}:${
 	import.meta.env.HOST_PORT
 }/`;
