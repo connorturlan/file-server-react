@@ -1,1 +1,26 @@
-.IconComponent {}
+@use "/styles/partials/palette";
+@use "/styles/partials/typography";
+@use "/styles/partials/devices";
+
+@use "/styles/modules/defaults.scss";
+
+.icon {
+	@include defaults.flex-center;
+
+	height: 100%;
+
+	padding: 0px;
+	margin: 0px;
+
+	border-radius: 10px;
+	border: 0px solid;
+
+	// color: palette.$font-dark;
+	// background-color: palette.$light;
+
+	overflow: hidden;
+
+	// &:hover {
+	// 	outline: 5px solid palette.$accent;
+	// }
+}

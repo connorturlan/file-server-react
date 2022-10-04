@@ -1,13 +1,11 @@
 import { useEffect, useState, useContext } from "react";
 import styles from "./App.module.scss";
-import FolderComponent from "./components/FolderComponent/FolderComponent";
+import FolderIcon from "./components/FolderIcon/FolderIcon";
 import FolderSidebar from "./components/FolderSidebar/FolderSidebar";
 import LoadingScreen from "./components/LoadingScreen/LoadingScreen";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 import FolderViewer from "./containers/FolderViewer/FolderViewer";
-import SelectionProvider, {
-	SelectionContext,
-} from "./contexts/SelectionContext";
+import { SelectionContext } from "./contexts/SelectionContext";
 import {
 	getFolderTree,
 	getFolderBranch,
@@ -178,7 +176,7 @@ function FileServer() {
 						navigateToFolder={navigateToFolder}
 					>
 						{dir.length > 0 && (
-							<FolderComponent
+							<FolderIcon
 								name={"←"}
 								onClick={() => navigateFrom()}
 							/>

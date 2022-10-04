@@ -1,1 +1,19 @@
-.FolderIcon {}
+@use "/styles/partials/palette";
+@use "/styles/partials/typography";
+@use "/styles/partials/devices";
+
+@use "/styles/modules/defaults.scss";
+
+.folder {
+	color: palette.$font-dark;
+	background-color: palette.$accent;
+
+	&_selected {
+		outline: 2px solid palette.$complement;
+		background-color: palette.$complement;
+	}
+
+	&:hover {
+		outline: 5px solid palette.$bright;
+	}
+}

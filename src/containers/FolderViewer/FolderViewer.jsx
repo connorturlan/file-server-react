@@ -1,5 +1,7 @@
 import FileComponent from "../../components/FileComponent/FileComponent";
+import FileIcon from "../../components/FileIcon/FileIcon";
 import FolderComponent from "../../components/FolderComponent/FolderComponent";
+import FolderIcon from "../../components/FolderIcon/FolderIcon";
 import { downloadFile, getFilePath } from "../../utils";
 import styles from "./FolderViewer.module.scss";
 
@@ -29,7 +31,7 @@ function FolderViewer({ children, folder, viewMode, navigateToFolder }) {
 		.filter((dir) => !dir.startsWith("."))
 		.map((e, index) => {
 			return (
-				<FolderComponent
+				<FolderIcon
 					key={index}
 					name={e}
 					onClick={() => navigateToFolder(e)}
@@ -44,7 +46,7 @@ function FolderViewer({ children, folder, viewMode, navigateToFolder }) {
 		.map((e, index) => {
 			const filepath = getFilePath(folder[".."], e);
 			return (
-				<FileComponent
+				<FileIcon
 					key={filepath}
 					name={e}
 					path={filepath}
