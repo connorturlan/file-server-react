@@ -1,4 +1,6 @@
-# Python Web Server (inc. File Server)
+# React File Server
+
+<img src="./docs/preview.png" height="400px" width="400px" />
 
 ## Setup
 
