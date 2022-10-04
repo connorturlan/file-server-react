@@ -4,7 +4,7 @@
 
 ## Setup
 
-**This project requires the [Python Web Server](https://github.com/connorturlan/web-server-py) project to run.** By default this includes the file server module.
+**This project requires the [Python Web Server](https://github.com/connorturlan/web-server-py) project to run.** By default it includes the file server module.
 
 Clone to repo and install all dependencies with:
 
