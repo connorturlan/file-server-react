@@ -23,10 +23,22 @@ function FileServer() {
 	const [dir, setDir] = useState([]);
 	const [viewMode, setViewMode] = useState(0);
 
+	const [clipboard, setClipboard] = useState([]);
+	const [clipboardMode, setClipboardMode] = useState(0);
+
 	const { isSelecting, setSelecting, selection } =
 		useContext(SelectionContext);
 
-	const [clipboard, setClipboard] = useState([]);
+	// fetch the entire folder tree, this may take a while.
+	// this is going to be replaces with the folder leaf method to get the folder tree as
+	// ...the user explores the server.
+	useEffect(() => {
+		const getElements = async () => {
+			await reloadFolderTree();
+		};
+
+		getElements();
+	}, []);
 
 	const reloadFolderTree = async () => {
 		const tree = await getFolderTree();
@@ -113,45 +125,46 @@ function FileServer() {
 		setSelecting(false);
 	};
 
-	const beginCopy = async () => {
-		// get the destination path.
-		const destinationPath = "/" + dir.join("/") + "/";
-
-		// copy each item on the clipboard to the new destination.
-		const promises = clipboard.map((itemPath) => {
-			const itemName = itemPath.endsWith("/")
-				? ""
-				: itemPath.split("/").at(-1);
-			return copyItem(itemPath, destinationPath + itemName);
-		});
-
-		// await all responses.
-		await Promise.all(promises);
-
-		// clear the clipboard.
-		setClipboard([]);
-
-		await reloadFolderTree();
+	const prepareCopy = () => {
+		addToClipboard();
+		setClipboardMode(1);
 	};
 
-	const beginMove = async () => {
+	const prepareMove = () => {
+		addToClipboard();
+		setClipboardMode(2);
+	};
+
+	const beginPaste = async () => {
 		// get the destination path.
 		const destinationPath = "/" + dir.join("/") + "/";
+
+		// perform the specified action.
+		let map;
+		switch (clipboardMode) {
+			default:
+			case 1:
+				map = copyItem;
+				break;
+			case 2:
+				map = moveItem;
+				break;
+		}
 
 		// copy each item on the clipboard to the new destination.
 		const promises = clipboard.map((itemPath) => {
 			const itemName = itemPath.endsWith("/")
 				? ""
 				: itemPath.split("/").at(-1);
-			return moveItem(itemPath, destinationPath + itemName);
+			return map(itemPath, destinationPath + itemName);
 		});
 
 		// await all responses.
-		await Promise.all(promises);
+		await Promise.allSettled(promises);
 
 		// clear the clipboard.
 		setClipboard([]);
-
+		setClipboardMode(0);
 		await reloadFolderTree();
 	};
 
@@ -170,23 +183,12 @@ function FileServer() {
 		});
 
 		// await all responses.
-		await Promise.all(promises);
+		await Promise.allSettled(promises);
 
 		setSelecting(false);
 
 		await reloadFolderTree();
 	};
-
-	// fetch the entire folder tree, this may take a while.
-	// this is going to be replaces with the folder leaf method to get the folder tree as
-	// ...the user explores the server.
-	useEffect(() => {
-		const getElements = async () => {
-			await reloadFolderTree();
-		};
-
-		getElements();
-	}, []);
 
 	const getFolder = (breadcrumbs, folderTree) => {
 		return breadcrumbs.length == 0
@@ -236,18 +238,30 @@ function FileServer() {
 				<div className={styles.header_button} onClick={toggleSelection}>
 					{isSelecting ? "☒" : "☐"}
 				</div>
-				<div className={styles.header_button} onClick={addToClipboard}>
-					clip
-				</div>
-				<div className={styles.header_button} onClick={beginCopy}>
-					copy
-				</div>
-				<div className={styles.header_button} onClick={beginMove}>
-					move
-				</div>
 				<div className={styles.header_button} onClick={beginDelete}>
 					delete
 				</div>
+
+				{clipboardMode == 0 ? (
+					<>
+						<div
+							className={styles.header_button}
+							onClick={prepareCopy}
+						>
+							copy
+						</div>
+						<div
+							className={styles.header_button}
+							onClick={prepareMove}
+						>
+							move
+						</div>
+					</>
+				) : (
+					<div className={styles.header_button} onClick={beginPaste}>
+						paste
+					</div>
+				)}
 			</NavigationBar>
 			<main className={styles.main}>
 				<FolderSidebar

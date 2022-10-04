@@ -22,15 +22,16 @@ export const patchFolderTree = (folderPath, root, leaf) => {
 };
 
 // return the join filepath with the root.
-export const getFilePath = (root, filename) => root + "/" + filename;
+export const getFilePath = (root, filename) => [...root, filename].join("/");
 
 // return the corresponding http urls for a given filepath.
-export const getFileURL = (filepath) => "http://localhost/files/get" + filepath;
-const postFileURL = (filepath) => "http://localhost/files/upload" + filepath;
-const postFolderURL = (filepath) => "http://localhost/files/mkdir" + filepath;
-const patchCopyURL = (filepath) => "http://localhost/files/copy" + filepath;
-const patchMoveURL = (filepath) => "http://localhost/files/move" + filepath;
-const deleteItemURL = (filepath) => "http://localhost/files/delete" + filepath;
+export const getFileURL = (filepath) =>
+	"http://localhost/files/get/" + filepath;
+const postFileURL = (filepath) => "http://localhost/files/upload/" + filepath;
+const postFolderURL = (filepath) => "http://localhost/files/mkdir/" + filepath;
+const patchCopyURL = (filepath) => "http://localhost/files/copy/" + filepath;
+const patchMoveURL = (filepath) => "http://localhost/files/move/" + filepath;
+const deleteItemURL = (filepath) => "http://localhost/files/delete/" + filepath;
 
 // download a specified file.
 export const downloadFile = async (filepath, filename) => {
