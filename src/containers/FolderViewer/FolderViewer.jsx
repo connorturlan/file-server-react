@@ -39,21 +39,25 @@ function FolderViewer({ children, folder, viewMode, navigateToFolder }) {
 		});
 
 	// generate files, remove hidden files.
-	const files = folder["."]
-		.filter((dir) => !dir.startsWith("."))
-		.sort((a, b) => a.split(".").at(-1).localeCompare(b.split(".").at(-1)))
-		.map((e, index) => {
-			const filepath = getFilePath(folder[".."], e);
-			return (
-				<FileIcon
-					key={filepath}
-					name={e}
-					path={filepath}
-					onClick={() => beginFileDownload(filepath, e)}
-					isPreview={isPreview}
-				/>
-			);
-		});
+	const files =
+		folder["."] &&
+		folder["."]
+			.filter((dir) => !dir.startsWith("."))
+			.sort((a, b) =>
+				a.split(".").at(-1).localeCompare(b.split(".").at(-1))
+			)
+			.map((e, index) => {
+				const filepath = getFilePath(folder[".."], e);
+				return (
+					<FileIcon
+						key={filepath}
+						name={e}
+						path={filepath}
+						onClick={() => beginFileDownload(filepath, e)}
+						isPreview={isPreview}
+					/>
+				);
+			});
 
 	return (
 		<div className={classes}>
