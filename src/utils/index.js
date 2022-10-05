@@ -15,8 +15,6 @@ export const getFolderBranch = async (filepath = "./share") => {
 };
 
 const patchTree = (path, node, leaf) => {
-	console.log("patch", path, path.length, node, leaf);
-
 	if (path.length <= 0) {
 		return { ...node, ...leaf };
 	}
@@ -27,29 +25,7 @@ const patchTree = (path, node, leaf) => {
 
 // patch a branch within the folder tree at the folder path.
 export const patchFolderTree = (folderPath, root, leaf) => {
-	console.log("update", folderPath, root, leaf);
-	/* const node = folderPath
-		.split("/")
-		.reduce((node, path) => (path in node ? node[path] : root), root);
-	node["."] = leaf["."];
-	console.log(root); */
-
-	const newRoot = patchTree(
-		folderPath ? folderPath.split("/") : [],
-		root,
-		leaf
-	);
-
-	console.log(root, leaf, newRoot);
-
-	return newRoot;
-
-	let node = folderPath
-		.split("/")
-		.reduce((folder, step) => (step in folder ? folder[step] : root), root);
-	//node = { ...node, ...leaf };
-	console.log(root, leaf, node);
-	return { ...root };
+	return patchTree(folderPath ? folderPath.split("/") : [], root, leaf);
 };
 
 // return the join filepath with the root.
