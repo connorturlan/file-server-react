@@ -34,13 +34,14 @@ function FileServer() {
 	// ...the user explores the server.
 	useEffect(() => {
 		const getElements = async () => {
-			await reloadFolderTree();
+			await updateFolderTree(dir.join("/"));
 		};
 
 		getElements();
 	}, []);
 
 	const reloadFolderTree = async () => {
+		setLoading(true);
 		const tree = await getFolderTree();
 		setElements(tree);
 		setLoading(false);
@@ -48,7 +49,7 @@ function FileServer() {
 
 	const updateFolderTree = async (path) => {
 		// update the loading state.
-		setLoading(true);
+		//setLoading(true);
 
 		// update the a leaf on the folder tree.
 		const leaf = await getFolderBranch(path);
@@ -58,16 +59,18 @@ function FileServer() {
 		setLoading(false);
 	};
 
-	const navigateToFolder = (path) => {
+	const navigateToFolder = async (path) => {
 		// add the selected folder to the history.
 		const newDir = [...dir, path];
+		await updateFolderTree(newDir.join("/"));
 		setDir(newDir);
 	};
 
-	const navigateFrom = () => {
+	const navigateFrom = async () => {
 		// remove the last history entry.
 		const newDir = [...dir];
 		newDir.pop();
+		await updateFolderTree(newDir.join("/"));
 		setDir(newDir);
 	};
 
@@ -85,8 +88,7 @@ function FileServer() {
 		await Promise.all(uploads);
 
 		// update the local elements.
-		const filepath = "/" + dir.join("/");
-		updateFolderTree(filepath);
+		await updateFolderTree(dir.join("/"));
 	};
 
 	const beginFolderCreation = async (event) => {
@@ -101,7 +103,7 @@ function FileServer() {
 
 		console.log("creating:", folder[".."].join("/"), folderName, status);
 
-		await reloadFolderTree();
+		await updateFolderTree(dir.join("/"));
 	};
 
 	const changeViewMode = (event) => {
@@ -160,7 +162,7 @@ function FileServer() {
 		// clear the clipboard.
 		setClipboard([]);
 		setClipboardMode(0);
-		await reloadFolderTree();
+		await updateFolderTree(dir.join("/"));
 	};
 
 	const beginDelete = async () => {
@@ -181,7 +183,7 @@ function FileServer() {
 		await Promise.allSettled(promises);
 
 		setSelecting(false);
-		await reloadFolderTree();
+		await updateFolderTree(dir.join("/"));
 	};
 
 	const beginRename = async () => {
@@ -199,7 +201,7 @@ function FileServer() {
 		await Promise.allSettled(promises);
 
 		setSelecting(false);
-		await reloadFolderTree();
+		await updateFolderTree(dir.join("/"));
 	};
 
 	const getFolder = (breadcrumbs, folderTree) => {
