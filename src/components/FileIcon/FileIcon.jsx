@@ -30,7 +30,7 @@ function FileIcon({ name, path, onClick, isPreview }) {
 					onMouseOver={playVideo}
 					onMouseLeave={pauseVideo}
 					loop
-					preload="none"
+					preload="metadata"
 				>
 					<source src={getFileURL(path)} type="video/webm" />
 					<source src={getFileURL(path)} type="video/mp4" />
