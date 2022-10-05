@@ -35,7 +35,6 @@ The app should:
 ## Known Issues
 
 -   Use isn't alerted when there is an error with the requested copy/move/rename.
--   Folder tree patch function doesn't update state correctly.
 
 ## Retrospective
 
@@ -43,7 +42,6 @@ The app should:
 
 -   Add responsive design.
 -   Add icons for common functions to improve UX.
--   Fix the folder tree patch function.
 
 ### Potentially
 
