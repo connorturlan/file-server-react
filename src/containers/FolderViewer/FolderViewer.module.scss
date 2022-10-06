@@ -4,8 +4,8 @@
 
 @use "/styles/modules/defaults.scss";
 
-$cols: 8;
-$icon-size: 160px;
+/* $cols: 8;
+$icon-size: 160px; */
 // $icon-size: 400px;
 
 .files {
@@ -49,6 +49,20 @@ $icon-size: 160px;
 }
 
 .grid {
+	$cols: 8;
+	@include devices.phone {
+		$cols: 2;
+	}
+
+	@include devices.tablet {
+		$cols: 4;
+	}
+
+	@include devices.desktop {
+		$cols: 8;
+	}
+	$icon-size: calc(75vw / $cols);
+
 	grid-template-columns: repeat($cols, $icon-size);
 	grid-auto-rows: $icon-size;
 	gap: 10px;

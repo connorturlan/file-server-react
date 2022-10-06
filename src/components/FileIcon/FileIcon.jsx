@@ -1,5 +1,5 @@
 import styles from "./FileIcon.module.scss";
-import { getFileURL } from "../../utils";
+import { getFileURL, getPreviewURL } from "../../utils";
 import IconComponent from "../IconComponent/IconComponent";
 
 function FileIcon({ name, path, onClick, isPreview }) {
@@ -13,12 +13,13 @@ function FileIcon({ name, path, onClick, isPreview }) {
 
 	// generate the image preview if the file is an image.
 	let imagePreview = false;
+	const fileURL = getPreviewURL(path);
 	if (isPreview) {
 		if (/.(jpe?g|gif|png|webp)$/i.test(name.toLowerCase())) {
 			imagePreview = (
 				<img
 					className={styles.base__image}
-					src={getFileURL(path)}
+					src={fileURL}
 					title={name}
 				></img>
 			);
@@ -32,8 +33,8 @@ function FileIcon({ name, path, onClick, isPreview }) {
 					loop
 					preload="metadata"
 				>
-					<source src={getFileURL(path)} type="video/webm" />
-					<source src={getFileURL(path)} type="video/mp4" />
+					<source src={fileURL} type="video/webm" />
+					<source src={fileURL} type="video/mp4" />
 				</video>
 			);
 		}
