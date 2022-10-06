@@ -49,7 +49,7 @@ function FileServer() {
 
 	const updateFolderTree = async (path) => {
 		// update the loading state.
-		//setLoading(true);
+		setLoading(true);
 
 		// update the a leaf on the folder tree.
 		const leaf = await getFolderBranch(path);

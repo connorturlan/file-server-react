@@ -114,8 +114,9 @@
 	}
 
 	&__Buttons {
-		display: flex;
-		justify-content: end;
+		display: grid;
+		grid-auto-columns: 1fr;
+		/* justify-content: end; */
 
 		@include devices.phone {
 			display: none;
@@ -136,30 +137,27 @@
 			flex-direction: row;
 		}
 
-		& > a {
-			@include defaults.flex-center;
-
+		& > * {
 			@include devices.phone {
-				width: 100vw;
+				min-width: 100px;
 			}
 
 			@include devices.tablet {
-				width: 100vw;
+				min-width: 100px;
 			}
 
 			@include devices.desktop {
-				width: 200px;
+				min-width: 100px;
 			}
-			height: 70px;
 
 			/* padding: 20px; */
 
 			text-decoration: none;
-			color: palette.$dark;
 
 			&:hover {
-				background-color: palette.$highlight;
+				background-color: palette.$light;
 				box-shadow: 0px 6px 4px palette.$shadow;
+				outline: 2px solid palette.$accent;
 			}
 
 			&:active {

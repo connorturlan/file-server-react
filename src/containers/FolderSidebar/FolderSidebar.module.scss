@@ -8,6 +8,18 @@
 	display: grid;
 	flex-direction: column;
 
+	@include devices.phone {
+		display: none;
+	}
+
+	@include devices.tablet {
+		display: grid;
+	}
+
+	@include devices.desktop {
+		display: grid;
+	}
+
 	height: 100%;
 
 	padding: 10px 5px;

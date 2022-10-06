@@ -49,23 +49,32 @@ $icon-size: 160px; */
 }
 
 .grid {
-	$cols: 8;
+	--gap: 10px;
 	@include devices.phone {
-		$cols: 2;
+		--cols: 2;
+		--icon-size: 45vw;
+		width: 100vw;
+		justify-content: center;
+		padding: auto var(--gap);
 	}
 
 	@include devices.tablet {
-		$cols: 4;
+		--cols: 4;
+		--icon-size: calc(
+			(100vw - 200px - (var(--gap) * (var(--cols) + 2))) / var(--cols)
+		);
+		padding: var(--gap);
 	}
 
 	@include devices.desktop {
-		$cols: 8;
+		--cols: 6;
+		--icon-size: calc(
+			(85vw - (var(--gap) * (var(--cols) + 2))) / var(--cols)
+		);
+		padding: var(--gap);
 	}
-	$icon-size: calc(75vw / $cols);
 
-	grid-template-columns: repeat($cols, $icon-size);
-	grid-auto-rows: $icon-size;
-	gap: 10px;
-
-	padding: 10px;
+	grid-template-columns: repeat(var(--cols), var(--icon-size));
+	grid-auto-rows: var(--icon-size);
+	gap: var(--gap);
 }

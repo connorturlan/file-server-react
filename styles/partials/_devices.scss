@@ -4,8 +4,8 @@ $md: 992px;
 $lg: 1200px;
 $xxl: 1400px;
 
-$phone-max: 600px;
-$tablet-max: 900px;
+$phone-max: 700px;
+$tablet-max: 1200px;
 
 @mixin phone {
 	@media only screen and (max-width: $phone-max) {
