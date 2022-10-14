@@ -10,6 +10,13 @@ export const getFolderTree = async (filepath = "./share") => {
 
 // get a specified branch on the folder tree.
 export const getFolderBranch = async (filepath = "./share") => {
+	return {
+		"hello,": {},
+		"world!": {},
+		".": ["file.txt"],
+		"..": ["//"],
+	};
+
 	const res = await fetch(fileServerURL + "files/folder/" + filepath);
 	return await res.json();
 };
