@@ -40,8 +40,8 @@ The app should:
 
 ## Future Plans
 
--   Add responsive design.
--   Add icons for common functions to improve UX.
+-   Add photo/video modals.
+-   Show current path in file system.
 
 ### Potentially
 

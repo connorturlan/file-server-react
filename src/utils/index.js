@@ -33,6 +33,8 @@ export const getFilePath = (root, filename) => [...root, filename].join("/");
 
 // return the corresponding http urls for a given filepath.
 export const getFileURL = (filepath) => fileServerURL + "files/get/" + filepath;
+export const getPreviewURL = (filepath) =>
+	fileServerURL + "files/preview/" + filepath;
 const postFileURL = (filepath) => fileServerURL + "files/upload/" + filepath;
 const postFolderURL = (filepath) => fileServerURL + "files/mkdir/" + filepath;
 const patchCopyURL = (filepath) => fileServerURL + "files/copy/" + filepath;

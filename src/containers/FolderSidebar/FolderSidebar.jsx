@@ -19,7 +19,7 @@ function FolderSidebar({ folderTree, currentFolder, setFolder }) {
 				folderName={name}
 				className={styles.icon}
 				onButtonPress={() => {
-					const newDir = folders[".."][0].split("/");
+					const newDir = folders[".."] && folders[".."][0].split("/");
 					setFolder(newDir[0] ? newDir : []);
 				}}
 			>
